@@ -1,0 +1,41 @@
+###############################################################################
+# Licensed Materials - Property of IBM.
+# Copyright IBM Corporation 2017. All Rights Reserved.
+# U.S. Government Users Restricted Rights - Use, duplication or disclosure 
+# restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Contributors:
+#  IBM Corporation - initial API and implementation
+###############################################################################
+
+include Configfile
+
+CHART_NAME ?= stable/ibm-cert-manager
+VERSION := $(shell grep version ./$(CHART_NAME)/Chart.yaml | awk '{print $$2}')
+
+.PHONY: build lint setup release-chart
+
+default: build
+
+tool:
+	curl -fksSL https://storage.googleapis.com/kubernetes-helm/helm-v2.7.2-linux-amd64.tar.gz | sudo tar --strip-components=1 -xvz -C /usr/local/bin/ linux-amd64/helm
+
+setup:
+	helm init -c
+
+lint: setup
+	helm lint $(CHART_NAME)
+
+build: lint
+	$(eval VERSION_NUMBER ?= ${VERSION})
+	mv $(CHART_NAME)/templates/tests/test01.yaml $(CHART_NAME)/..
+	helm package --version $(VERSION_NUMBER) $(CHART_NAME)
+	mv $(CHART_NAME)/../test01.yaml $(CHART_NAME)/templates/tests
+
+# Pushes chart to Artifactory repository.
+release-chart: build
+	$(eval VERSION_NUMBER ?= ${VERSION})
+	$(eval NAME := $(notdir $(CHART_NAME)))
+	$(eval FILE_NAME := $(NAME)-$(VERSION_NUMBER).tgz)
+	$(eval URL := $(ARTIFACTORY_URL)/$(ARTIFACTORY_REPO))
+	curl -H "X-JFrog-Art-Api: $(ARTIFACTORY_KEY)" -T $(FILE_NAME) $(URL)/$(FILE_NAME)

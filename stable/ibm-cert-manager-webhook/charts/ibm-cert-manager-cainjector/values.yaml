@@ -1,0 +1,68 @@
+global:
+  ## Reference to one or more secrets to be used when pulling images
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  imagePullSecrets: []
+  # - name: "image-pull-secret"
+
+  # Optional priority class to be used for the cert-manager pods
+  priorityClassName: ""
+  rbac:
+    create: true
+
+  leaderElection:
+    # Override the namespace used to store the ConfigMap for leader election
+    namespace: ""
+
+replicaCount: 1
+
+nodeSelector:
+  master: "true"
+
+tolerations:
+- effect: NoSchedule
+  key: dedicated
+  operator: Exists
+- key: CriticalAddonsOnly
+  operator: Exists
+
+strategy: {}
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: 0
+  #   maxUnavailable: 1
+
+podAnnotations: {}
+
+# Optional additional arguments for cainjector
+extraArgs: []
+
+resources: {}
+  # requests:
+  #   cpu: 10m
+  #   memory: 32Mi
+
+image:
+  repository: ibmcom/icp-cert-manager-cainjector
+  tag: 0.10.0
+  pullPolicy: IfNotPresent
+
+securityContext:
+  pod:
+    runAsNonRoot: true
+    runAsUser: 10000
+  container:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 10000
+    privileged: false
+
+podDnsPolicy: "ClusterFirstWithHostNet"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "default"

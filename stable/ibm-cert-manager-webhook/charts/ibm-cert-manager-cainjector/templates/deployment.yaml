@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cainjector.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ include "cainjector.name" . }}
+    chart: {{ include "cainjector.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "cainjector.name" . }}
+      release: {{ .Release.Name }}
+  {{- with .Values.strategy }}
+  strategy:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        k8s-app: "cert-manager-cainjector"
+        chart: {{ template "cainjector.chart" . }}
+        heritage: {{ .Release.Service }}
+        app: {{ include "cainjector.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: docker/default        
+      {{- if .Values.podAnnotations }}
+{{ toYaml .Values.podAnnotations | indent 8 }}
+      {{- end }}
+    spec:
+      hostNetwork: false
+      hostPID: false
+      hostIPC: false
+      serviceAccountName: {{ template "webhook.serviceAccountName" . }}
+      {{- if .Values.global.priorityClassName }}
+      priorityClassName: {{ .Values.global.priorityClassName | quote }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: {{ .Values.securityContext.pod.runAsNonRoot }}
+{{- if not (.Capabilities.APIVersions.Has "security.openshift.io/v1") }} 
+        runAsUser: {{ .Values.securityContext.pod.runAsUser }}
+{{- end }}        
+      serviceAccountName: {{ template "cainjector.serviceAccountName" . }}
+      {{- if .Values.global.priorityClassName }}
+      priorityClassName: {{ .Values.global.priorityClassName | quote }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+          {{- if .Values.global.leaderElection.namespace }}
+          - --leader-election-namespace={{ .Values.global.leaderElection.namespace }}
+          {{- else }}
+          - --leader-election-namespace=$(POD_NAMESPACE)
+          {{- end }}
+          {{- if .Values.extraArgs }}
+{{ toYaml .Values.extraArgs | indent 10 }}
+          {{- end }}
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - pgrep cainjector -l
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "exec echo start cert-manager cainjector"]
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: {{ .Values.securityContext.container.allowPrivilegeEscalation }}
+            readOnlyRootFilesystem: {{ .Values.securityContext.container.readOnlyRootFilesystem }}
+            capabilities:
+              drop:
+              - ALL
+{{- if not (.Capabilities.APIVersions.Has "security.openshift.io/v1") }} 
+            runAsUser: {{ .Values.securityContext.container.runAsUser }}
+{{- end }}              
+            runAsNonRoot: {{ .Values.securityContext.container.runAsNonRoot }}
+          resources:
+            limits:
+              memory: "300Mi"
+              cpu: "200m"
+            requests:
+              memory: "150Mi"
+              cpu: "100m"            
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}  
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

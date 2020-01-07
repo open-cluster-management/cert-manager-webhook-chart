@@ -1,0 +1,231 @@
+global:
+  __metadata:
+    label: "Global Chart Settings"
+    description: "Global values for cert-manager-webhook chart"
+  imagePullSecrets:
+    __metadata:
+      label: "Image Pull Secrets"
+      description: "Any secrets required to pull cert-manager-webhook images."
+      type: "string"
+      required: false
+  priorityClassName:
+    __metadata:
+      label: "Priority Class Name"
+      description: "Optional priority class to be used for the cert-manager-webhook pods."
+      type: "string"
+      required: false
+  rbac:
+    create:
+      __metadata:
+        label: "Rbac for certificate resources"
+        description: "If true, create and use RBAC resources"
+        type: "boolean"
+        required: true
+replicaCount:
+  __metadata:
+    label: "Replicas"
+    description: "Number of cert-manager-webhook replicas"
+    type: "number"
+    required: true
+strategy:
+  __metadata:
+    label: "Strategy"
+    description: "The type of update strategy to apply to cert-manager-webhook."
+    type: "string"
+    required: false
+image:
+  __metadata:
+    label: "Image"
+    description: "Image to be used for cert-manager-webhook deployment"
+  repository:
+    __metadata:
+      label: "Image Repository"
+      description: "Full repository and path to Certificate Manager image."
+      type: "string"
+      required: true
+  tag:
+    __metadata:
+      label: "Image Tag"
+      description: "The tag identifying which Certificate Manager image to deploy."
+      type: "string"
+      required: true
+  pullPolicy:
+    __metadata:
+      label: "Pull Policy"
+      description: "The policy used by Kubernetes for images."
+      type: "string"
+      required: true
+      options:
+      - label: "Never"
+        value: "Never"
+      - label: "IfNotPresent"
+        value: "IfNotPresent"
+      - label: "Always"
+        value: "Always"
+serviceAccount:
+  __metadata:
+    label: "Service Account"
+    description: "Creates a new service account."
+  create:
+    __metadata:
+      label: "Create"
+      description: "If true, create a new service account."
+      type: "boolean"
+      required: true
+  name:
+    __metadata:
+      label: "Service Account Name"
+      description: "Service account to be used. If not set and serviceAccount.create is true, a name is generated using the fullname template."
+      type: "string"
+      required: false
+extraArgs:
+  __metadata:
+    label: "Additional Arguments"
+    description: "Optional flags for cert-manager-webhook"
+    type: "string"
+    required: false
+securityContext:
+  __metadata:
+    label: "Security Context"
+    description: "The security context cert-manager-webhook uses."
+  pod:
+    runAsNonRoot:
+      __metadata:
+        label: "Run As Non-Root"
+        description: "If true, prevents cert-manager-webhook containers from being run as a root user."
+        type: "boolean"
+    runAsUser:
+      __metadata:
+        label: "Run As User"
+        description: "The user to run all containers in this pod as."
+        type: "string"
+  container:
+    readOnlyRootFilesystem:
+      __metadata:
+        label: "Read Only File System"
+        description: "If true, then only allows reads from the file system."
+        type: "boolean"
+    allowPrivilegeEscalation:
+      __metadata:
+        label: "Allow Privilege Escalation"
+        description: "If true, allows a user within the cert-manager-webhook container to escalate their privilege to root."
+        type: "boolean"
+    runAsNonRoot:
+      __metadata:
+        label: "Run As Non-Root"
+        description: "If true, prevents cert-manager-webhook container from being run as a root user."
+        type: "boolean"
+    runAsUser:
+      __metadata:
+        label: "Run As User"
+        description: "The user to run cert-manager as in the container."
+        type: "string"
+    privileged:
+      __metadata:
+        label: "Privileged"
+        description: "If true, allows container to run with privileged access."
+        type: "boolean"
+podAnnotations:
+  __metadata:
+    name: "podAnnotations"
+    label: "Pod Annotations"
+    description: "Annotations to add to the cert-manager-webhook pod"
+    immutable: false
+    required: false
+    type: "string"
+args:
+  __metadata:
+    name: "args"
+    label: "Arguments"
+    description: "The arguments the webhook takes when starting up."
+  verbosity:
+    __metadata:
+      name: "verbosity"
+      label: "Verbosity"
+      description: "How verbose the webhook logs are, 1 being the least and 12 being the most."
+      type: "number"
+      required: false
+nodeSelector:
+  __metadata:
+    name: "nodeSelector"
+    label: "Node selector"
+    description: "Node labels for pod assignment"
+    type: "string"
+    immutable: false
+    required: false
+  master:
+    __metadata:
+      label: "Master"
+      description: "Runs on master node if true, otherwise runs on other nodes if false."
+      type: "string"
+      required: true
+resources:
+  __metadata:
+    label: "Resources"
+    description: "Resource requests and limits for cpu and memory for cert-manager-webhook deployment"
+  requests:
+    memory:
+      __metadata:
+        label: "Memory request"
+        description: "The amount of memory cert-manager-webhook requests"
+        required: false
+        type: "string"
+    cpu:
+      __metadata:
+        label: "CPU request"
+        description: "The amount of CPU cert-manager-webhook requests"
+        required: false
+        type: "string"
+  limits:
+    memory:
+      __metadata:
+        label: "Memory limit"
+        description: "The memory limit cert-manager-webhook has"
+        required: true
+        type: "string"
+    cpu:
+      __metadata:
+        label: "CPU limit"
+        description: "The limit on CPU that that cert-manager-webhook is allowed to have"
+        required: true
+        type: "string"
+injectAPIServerCA:
+  __metadata:
+    label: "Inject CA"
+    description: "If true, the apiserver's cabundle will automatically be injected into the webhook"
+    required: true
+    type: "boolean"
+tolerations:
+  __metadata:
+    label: "Tolerations"
+    description: "When specified, tolerates any taint that matches the triple <key, value, effect>"
+    type: "string"
+    required: false
+affinity:
+  __metadata:
+    label: "Affinity"
+    description: "Pod's affinity"
+    hidden: true
+watcher:
+  __metadata:
+    label: "Watcher"
+    description: "The values for using the configmap watcher"
+  optIn:
+    __metadata:
+      label: "Opt In"
+      description: "Opts into the configmap watcher if true"
+      required: true
+      type: "boolean"
+  configmap:
+    name:
+      __metadata:
+        label: "Name"
+        description: "Name of configmap to watch"
+        required: false
+        type: "string"
+    namespace:
+      __metadata:
+        label: "Namespace"
+        description: "Namespace of the configmap to watch"
+        required: false
+        type: "string"

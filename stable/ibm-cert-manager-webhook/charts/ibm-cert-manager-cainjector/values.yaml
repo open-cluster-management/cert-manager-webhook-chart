@@ -44,7 +44,7 @@ resources: {}
 
 image:
   repository: ibmcom/icp-cert-manager-cainjector
-  tag: 0.10.0
+  tag: 0.10.1
   pullPolicy: IfNotPresent
 
 securityContext:

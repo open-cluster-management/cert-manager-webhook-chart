@@ -29,6 +29,7 @@ jobs:
       script:
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
         - |
+          make init
           make component/build
     - stage: unit-test
       name: "Deploy the image to a cluster and run e2e tests"
@@ -38,7 +39,7 @@ jobs:
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
         # Bootstrap the build harness, pull test image, and run unit tests.  
         - | 
-          make 
+          make init
           make component/test/unit
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
@@ -47,6 +48,6 @@ jobs:
         #Check out a clusterpool, set up oc, deploy, run e2e tests, and return clusterpool cluster
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
         - |
-          make 
+          make init
           make component/test/e2e
 

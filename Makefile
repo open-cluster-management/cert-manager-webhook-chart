@@ -11,6 +11,7 @@
 HELM_PACKAGE_PATH ?= stable
 CHART_NAME := $(shell ls $(HELM_PACKAGE_PATH) | head -n 1)
 TARGET_VERSION := $(shell cat $TRAVIS_BUILD_PATH/COMPONENT_VERSION 2>/dev/null)
+version := $(TARGET_VERSION)
 GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
 GITHUB_TOKEN ?=
 

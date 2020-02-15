@@ -8,6 +8,8 @@
 #  IBM Corporation - initial API and implementation
 ###############################################################################
 
+HELM_PACKAGE_PATH ?= stable
+CHART_NAME := $(shell ls $(HELM_PACKAGE_PATH) | head -n 1)
 GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
 GITHUB_TOKEN ?=
 

@@ -8,7 +8,7 @@
 #  IBM Corporation - initial API and implementation
 ###############################################################################
 
-HELM_PACKAGE_PATH ?= stable
+HELM_PACKAGE_PATH ?= stable/
 CHART_NAME := $(shell ls $(HELM_PACKAGE_PATH) | head -n 1)
 TARGET_VERSION := $(shell cat COMPONENT_VERSION 2>/dev/null)
 version := $(TARGET_VERSION)

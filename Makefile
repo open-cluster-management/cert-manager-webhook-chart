@@ -7,11 +7,7 @@
 # Contributors:
 #  IBM Corporation - initial API and implementation
 ###############################################################################
-GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
 
-.PHONY: init\:
-init::
-	@mkdir -p variables
 ifndef GITHUB_USER
 	$(info GITHUB_USER not defined)
 	exit -1
@@ -22,42 +18,8 @@ ifndef GITHUB_TOKEN
 	exit -1
 endif
 
--include $(shell curl -fso .build-harness -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3.raw" "https://raw.github.ibm.com/ICP-DevOps/build-harness/master/templates/Makefile.build-harness"; echo .build-harness)
-SHELL = /bin/bash
-STABLE_BUILD_DIR = repo/stable
-STABLE_REPO_URL ?= https://raw.githubusercontent.com/IBM/charts/master/repo/stable/
-STABLE_CHARTS := $(wildcard stable/*)
+GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
+GITHUB_TOKEN ?=
 
-.DEFAULT_GOAL=all
+-include $(shell curl -H 'Authorization: token ${GITHUB_TOKEN}' -H 'Accept: application/vnd.github.v4.raw' -L https://api.github.com/repos/open-cluster-management/build-harness-extensions/contents/templates/Makefile.build-harness-bootstrap -o .build-harness-bootstrap; echo .build-harness-bootstrap)
 
-$(STABLE_BUILD_DIR):
-	@mkdir -p $@
-
-.PHONY: charts charts-stable $(STABLE_CHARTS) 
-
-# Default aliases: charts, repo
-
-charts: charts-stable
-
-repo: repo-stable
-
-charts-stable: $(STABLE_CHARTS)
-$(STABLE_CHARTS): $(STABLE_BUILD_DIR) 
-	cv lint helm $@
-	mv $@/templates/tests/test01.yaml .
-	helm package $@ -d $(STABLE_BUILD_DIR)
-	mv test01.yaml $@/templates/tests
-
-.PHONY: copyright-check
-copyright-check:
-	./build-tools/copyright-check.sh
-
-.PHONY: repo repo-stable repo-incubating 
-
-repo-stable: $(STABLE_CHARTS) $(STABLE_BUILD_DIR)
-	helm repo index $(STABLE_BUILD_DIR) --url $(STABLE_REPO_URL)
-
-.PHONY: all
-all: repo-stable 
-
-include Makefile.chart

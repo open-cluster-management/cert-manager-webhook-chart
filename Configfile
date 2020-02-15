@@ -1,8 +1,0 @@
-GIT_REMOTE_URL = $(shell git config --get remote.origin.url)
-GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
-GITHUB_TOKEN ?=
-
-ARTIFACTORY_URL ?= https://na.artifactory.swg-devops.com/artifactory
-ARTIFACTORY_REPO ?= hyc-cloud-private-scratch-helm-local
-
-ARTIFACTORY_KEY ?=

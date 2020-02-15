@@ -1,55 +1,53 @@
----
-sudo: required
-group: bluezone
-language: generic
+os:
+  - linux
 
-# Environment variables (setup endpoint to IBM github)
-env:
-  global:
-  - OCTOKIT_API_ENDPOINT="https://github.ibm.com/api/v3/"
+language: python
+python: "3.7"
 
 services:
   - docker
 
-before_install:
-  # copy right check disabled for community chart
-  # - make copyright-check
-  # Clone build tools & set tools path for follow on processing 
-  - if [[ ! -z "$BRANCH_OVERRIDE" ]] ; then
-      git clone -b $BRANCH_OVERRIDE git@github.ibm.com:ibmprivatecloud/content-tools;
-    else
-      git clone git@github.ibm.com:ibmprivatecloud/content-tools;
-    fi
-  - export toolsPath=`pwd`/content-tools/travis-tools/
-  # Install dependencies & determine chart delta
-  - $toolsPath/build/bin/installDependencies.sh
-  - export changeList=`$toolsPath/build/bin/determineChartDelta.sh | tee determineChartDelta.out | grep 'return determineChartDelta:' | cut -f2 -d:` && cat determineChartDelta.out
-  - source travis-env.sh
+env:
+  global:
+    # Required
+    - OS=linux
+    - COMPONENT_TAG_EXTENSION="-${TRAVIS_COMMIT}"
 
-install:
-  # Package for release
-  - if [[ ! -z "$TRAVIS_TAG" ]] ; then $toolsPath/release/bin/package.sh; fi
-  # Lint and install/test charts (if cv-tests exist)
-  # debug: disabled lint
-  - $toolsPath/cv-test/bin/validateContent.sh
+    # Component Specific
+    - COMPONENT_BUILD_COMMAND=${TRAVIS_BUILD_DIR}/build/build.sh
+    - COMPONENT_TYPE="make"
 
-deploy:
-  # scp helm repo(s) to location identified (Note: SSHPASS env variable must contain password)
-  - provider: script
-    skip_cleanup: true
-    script:  $toolsPath/build/bin/deployHelmRepo.sh
-    on:
-      all_branches: true
-  # Publish tagged release
-  - provider: releases
-    skip_cleanup: true
-    api_key: $GITHUB_TOKEN
-    file_glob: true
-    file: repo/stable/*
-    on:
-      tags: true
+stages:
+  - build
+  - unit-test
+  - test-e2e
 
-after_success:
-  - |
-    echo "push chart image to artifactory registry"
-    make CHART_NAME=stable/ibm-cert-manager-webhook release-chart
+jobs:
+  include:
+    - stage: build
+      name: "Build the image and run unit tests"
+      script:
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
+        - |
+          make
+          make component/build
+    - stage: unit-test
+      name: "Deploy the image to a cluster and run e2e tests"
+      if: type = pull_request
+      script:
+        # Set the image tag differently for PRs
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
+        # Bootstrap the build harness, pull test image, and run unit tests.  
+        - | 
+          make 
+          make component/test/unit
+    - stage: test-e2e
+      name: "Deploy the image to a cluster and run e2e tests"
+      if: type = pull_request
+      script:
+        #Check out a clusterpool, set up oc, deploy, run e2e tests, and return clusterpool cluster
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then export COMPONENT_TAG_EXTENSION="-PR${TRAVIS_PULL_REQUEST}-${TRAVIS_COMMIT}"; fi;
+        - |
+          make 
+          make component/test/e2e
+

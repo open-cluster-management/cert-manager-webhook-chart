@@ -34,8 +34,10 @@ resources:
     memory: "150Mi"
     cpu: "100m" 
 
+imageTagPostfix: ""
 image:
-  repository: ibmcom/icp-cert-manager-webhook
+  name: icp-cert-manager-webhook
+  repository: ibmcom
   tag: 0.10.1
   pullPolicy: IfNotPresent
 

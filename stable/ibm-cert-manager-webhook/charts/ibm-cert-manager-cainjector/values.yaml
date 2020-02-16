@@ -42,8 +42,10 @@ resources: {}
   #   cpu: 10m
   #   memory: 32Mi
 
+imageTagPostfix: ""
 image:
-  repository: ibmcom/icp-cert-manager-cainjector
+  name: icp-cert-manager-cainjector
+  repository: ibmcom
   tag: 0.10.1
   pullPolicy: IfNotPresent
 

@@ -50,7 +50,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}{{ .Values.imageTagPostfix }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           {{- if .Values.global.leaderElection.namespace }}

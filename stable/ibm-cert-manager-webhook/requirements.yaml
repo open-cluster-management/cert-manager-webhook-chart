@@ -1,4 +1,0 @@
-requirements:
-- name: ibm-cert-manager-cainjector
-  version: "3.4.0"
-  repository: "file://ibm-cert-manager-cainjector"

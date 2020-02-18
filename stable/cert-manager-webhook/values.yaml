@@ -36,7 +36,7 @@ resources:
 
 imageTagPostfix: ""
 image:
-  name: icp-cert-manager-webhook
+  name: cert-manager-webhook
   repository: ibmcom
   tag: 0.10.1
   pullPolicy: IfNotPresent

@@ -44,7 +44,7 @@ resources: {}
 
 imageTagPostfix: ""
 image:
-  name: icp-cert-manager-cainjector
+  name: cert-manager-cainjector
   repository: ibmcom
   tag: 0.10.1
   pullPolicy: IfNotPresent

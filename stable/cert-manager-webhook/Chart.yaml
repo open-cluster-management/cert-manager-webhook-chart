@@ -1,4 +1,4 @@
-name: ibm-cert-manager-webhook
+name: cert-manager-webhook
 apiVersion: v1
 version: 3.5.0
 appVersion: 0.10.1
@@ -14,10 +14,8 @@ keywords:
   - letsencrypt
   - tls
   - Development
-  - ICP
   - amd64
   - ppc64le
   - s390x
   - Commercial
-  - ICPRHOCP
   - RHOCP

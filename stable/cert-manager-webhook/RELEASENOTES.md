@@ -6,7 +6,7 @@
 * Kubernetes Version 1.11 or later
 
 # Documentation
-Knowledge Center: https://www.ibm.com/support/knowledgecenter/SSFC4F_1.2.0/audit-logging/3.3.0/troubleshoot/hook.html
+Knowledge Center
 
 # Known issues
 None

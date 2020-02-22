@@ -16,9 +16,6 @@ global:
 
 replicaCount: 1
 
-nodeSelector:
-  master: "true"
-
 tolerations:
 - effect: NoSchedule
   key: dedicated
@@ -45,7 +42,7 @@ resources: {}
 imageTagPostfix: ""
 image:
   name: cert-manager-cainjector
-  repository: ibmcom
+  repository: quay.io/open-cluster-management
   tag: 0.10.1
   pullPolicy: IfNotPresent
 

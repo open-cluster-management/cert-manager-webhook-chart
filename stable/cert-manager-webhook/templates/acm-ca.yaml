@@ -1,0 +1,38 @@
+---
+# Create a selfsigned Issuer, in order to create a root CA certificate for RHACM
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: cert-manager-rhacm-selfsign
+  namespace: kube-system
+spec:
+  selfSigned: {}
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: cluster-ca-cert
+  namespace: kube-system
+spec:
+  secretName: cluster-ca-cert
+  isCA: true
+  issuerRef:
+    name: cert-manager-rhacm-selfsign
+    kind: Issuer
+  commonName: www.redhat.com
+  duration: 43800h
+  renewBefore: 720h
+  organization:
+  - "OpenShift ACM"
+  keySize: 4096
+  dnsNames:
+  - www.redhat.com
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+ name: icp-ca-issuer
+spec:
+ ca:
+   secretName: cluster-ca-cert
+---

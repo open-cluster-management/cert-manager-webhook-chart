@@ -145,20 +145,6 @@ args:
       description: "How verbose the webhook logs are, 1 being the least and 12 being the most."
       type: "number"
       required: false
-nodeSelector:
-  __metadata:
-    name: "nodeSelector"
-    label: "Node selector"
-    description: "Node labels for pod assignment"
-    type: "string"
-    immutable: false
-    required: false
-  master:
-    __metadata:
-      label: "Master"
-      description: "Runs on master node if true, otherwise runs on other nodes if false."
-      type: "string"
-      required: true
 resources:
   __metadata:
     label: "Resources"

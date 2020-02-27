@@ -4,17 +4,17 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Issuer
 metadata:
   name: cert-manager-rhacm-selfsign
-  namespace: kube-system
+  namespace: {{ .Release.Namespace | quote }}
 spec:
   selfSigned: {}
 ---
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: cluster-ca-cert
-  namespace: kube-system
+  name: multicloud-ca-cert
+  namespace: {{ .Release.Namespace | quote }}
 spec:
-  secretName: cluster-ca-cert
+  secretName: multicloud-ca-cert
   isCA: true
   issuerRef:
     name: cert-manager-rhacm-selfsign
@@ -29,10 +29,11 @@ spec:
   - www.redhat.com
 ---
 apiVersion: certmanager.k8s.io/v1alpha1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
- name: icp-ca-issuer
+  name: multicloud-ca-issuer
+  namespace: {{ .Release.Namespace | quote }}
 spec:
- ca:
-   secretName: cluster-ca-cert
+  ca:
+    secretName: multicloud-ca-cert
 ---

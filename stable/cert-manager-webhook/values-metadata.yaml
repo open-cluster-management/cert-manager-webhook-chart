@@ -2,10 +2,10 @@ global:
   __metadata:
     label: "Global Chart Settings"
     description: "Global values for cert-manager-webhook chart"
-  imagePullSecrets:
+  pullSecret:
     __metadata:
-      label: "Image Pull Secrets"
-      description: "Any secrets required to pull cert-manager-webhook images."
+      label: "Image Pull Secret"
+      description: "A secret required to pull cert-manager-webhook images."
       type: "string"
       required: false
   priorityClassName:

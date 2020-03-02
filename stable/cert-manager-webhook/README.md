@@ -117,7 +117,6 @@ This chart also defines a custom SecurityContextConstraints which can be used to
     - DAC_OVERRIDE
     - SETGID
     - SETUID
-    - NET_BIND_SERVICE
     seLinux:
       type: RunAsAny
     supplementalGroups:

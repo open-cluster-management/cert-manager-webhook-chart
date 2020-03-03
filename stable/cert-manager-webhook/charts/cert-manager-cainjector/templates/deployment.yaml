@@ -35,7 +35,7 @@ spec:
       hostNetwork: false
       hostPID: false
       hostIPC: false
-      serviceAccountName: {{ template "webhook.serviceAccountName" . }}
+      serviceAccountName: {{ template "cainjector.serviceAccountName" . }}
       {{- if .Values.global.priorityClassName }}
       priorityClassName: {{ .Values.global.priorityClassName | quote }}
       {{- end }}
@@ -44,10 +44,6 @@ spec:
 {{- if not (.Capabilities.APIVersions.Has "security.openshift.io/v1") }} 
         runAsUser: {{ .Values.securityContext.pod.runAsUser }}
 {{- end }}        
-      serviceAccountName: {{ template "cainjector.serviceAccountName" . }}
-      {{- if .Values.global.priorityClassName }}
-      priorityClassName: {{ .Values.global.priorityClassName | quote }}
-      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}{{ .Values.imageTagPostfix }}"

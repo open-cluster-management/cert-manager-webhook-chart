@@ -44,7 +44,7 @@ spec:
       {{- end }}
       securityContext:
         runAsNonRoot: {{ .Values.securityContext.pod.runAsNonRoot }}
-{{- if not (.Capabilities.APIVersions.Has "security.openshift.io/v1") }} 
+{{- if .Values.securityContext.pod.runAsUser }} 
         runAsUser: {{ .Values.securityContext.pod.runAsUser }}
 {{- end }}          
       containers:
@@ -88,7 +88,7 @@ spec:
             capabilities:
               drop:
               - ALL
-{{- if not (.Capabilities.APIVersions.Has "security.openshift.io/v1") }} 
+{{- if .Values.securityContext.container.runAsUser }} 
             runAsUser: {{ .Values.securityContext.container.runAsUser }}
 {{- end }}              
             runAsNonRoot: {{ .Values.securityContext.container.runAsNonRoot }}

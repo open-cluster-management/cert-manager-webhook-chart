@@ -49,12 +49,10 @@ image:
 securityContext:
   pod:
     runAsNonRoot: true
-    runAsUser: 1001010000
   container:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: false
     runAsNonRoot: true
-    runAsUser: 1001010000
     privileged: false
 
 podDnsPolicy: "ClusterFirstWithHostNet"

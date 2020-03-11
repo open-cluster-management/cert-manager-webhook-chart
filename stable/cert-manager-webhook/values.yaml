@@ -40,12 +40,7 @@ image:
   tag: 0.10.1
   pullPolicy: IfNotPresent
 
-tolerations:
-- effect: NoSchedule
-  key: dedicated
-  operator: Exists
-- key: CriticalAddonsOnly
-  operator: Exists
+tolerations: {}
 # if true, the apiserver's cabundle will be automatically injected into the
 # webhook's ValidatingWebhookConfiguration resource by the CA injector.
 # in future this will default to false, as the apiserver can use the loopback
@@ -76,3 +71,5 @@ watcher:
   configmap:
     name:
     namespace: 
+
+pkiNamespace: "kube-system"

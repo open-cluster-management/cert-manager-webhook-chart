@@ -27,7 +27,6 @@ spec:
         app: {{ include "cainjector.name" . }}
         release: {{ .Release.Name }}
       annotations:
-        seccomp.security.alpha.kubernetes.io/pod: docker/default        
       {{- if .Values.podAnnotations }}
 {{ toYaml .Values.podAnnotations | indent 8 }}
       {{- end }}

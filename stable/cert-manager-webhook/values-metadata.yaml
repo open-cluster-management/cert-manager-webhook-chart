@@ -215,3 +215,9 @@ watcher:
         description: "Namespace of the configmap to watch"
         required: false
         type: "string"
+pkiNamespace:
+  __metadata:
+    label: "PKI Namespace"
+    description: "Namespace where Certificates and Issuers will be created"
+    type: "string"
+    required: true

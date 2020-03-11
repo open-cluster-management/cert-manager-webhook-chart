@@ -4,7 +4,7 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Issuer
 metadata:
   name: cert-manager-rhacm-selfsign
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Values.pkiNamespace | quote }}
 spec:
   selfSigned: {}
 ---
@@ -12,7 +12,7 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
   name: multicloud-ca-cert
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Values.pkiNamespace | quote }}
 spec:
   secretName: multicloud-ca-cert
   isCA: true
@@ -32,7 +32,7 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Issuer
 metadata:
   name: multicloud-ca-issuer
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Values.pkiNamespace | quote }}
 spec:
   ca:
     secretName: multicloud-ca-cert
@@ -41,7 +41,7 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Issuer
 metadata:
   name: multicluster-hub-mcm-server-ca-issuer
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Values.pkiNamespace | quote }}
 spec:
   selfSigned: {}
 ---

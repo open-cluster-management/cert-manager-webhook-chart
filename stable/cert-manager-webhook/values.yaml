@@ -67,9 +67,9 @@ serviceAccount:
 affinity: {}
 
 watcher:
-  optIn: false
+  optIn: true
   configmap:
-    name:
-    namespace: 
+    name: extension-apiserver-authentication
+    namespace: kube-system
 
 pkiNamespace: "kube-system"

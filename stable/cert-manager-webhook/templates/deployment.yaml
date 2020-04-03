@@ -64,7 +64,7 @@ spec:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: TMPDIR
-            value: "/home/webhook/tmp"
+            value: "/tmp"
           livenessProbe:
             exec:
               command:

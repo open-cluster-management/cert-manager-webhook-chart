@@ -40,6 +40,9 @@ image:
   tag: 0.10.1
   pullPolicy: IfNotPresent
 
+imageShaDigests:
+  cert_manager_webhook: ""
+
 tolerations: {}
 # if true, the apiserver's cabundle will be automatically injected into the
 # webhook's ValidatingWebhookConfiguration resource by the CA injector.

@@ -48,7 +48,11 @@ spec:
 {{- end }}          
       containers:
         - name: {{ .Chart.Name }}
+          {{- if .Values.imageShaDigests.cert_manager_webhook }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}@{{ .Values.imageShaDigests.cert_manager_webhook }}"
+          {{- else }}
           image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}{{ .Values.imageTagPostfix }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           - --v={{ .Values.args.verbosity }}

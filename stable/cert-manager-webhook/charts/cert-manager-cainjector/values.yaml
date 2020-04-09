@@ -46,6 +46,9 @@ image:
   tag: 0.10.1
   pullPolicy: IfNotPresent
 
+imageShaDigests:
+  cert_manager_cainjector: ""
+
 securityContext:
   pod:
     runAsNonRoot: true

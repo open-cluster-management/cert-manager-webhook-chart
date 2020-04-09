@@ -45,7 +45,11 @@ spec:
 {{- end }}        
       containers:
         - name: {{ .Chart.Name }}
+          {{- if .Values.imageShaDigests.cert_manager_cainjector }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}@{{ .Values.imageShaDigests.cert_manager_cainjector }}"
+          {{- else }}
           image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}{{ .Values.imageTagPostfix }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           {{- if .Values.global.leaderElection.namespace }}

@@ -1,21 +1,6 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cert-manager-cainjector-leader-election
-  {{- if .Values.global.leaderElection.namespace }}
-  namespace: {{ .Values.global.leaderElection.namespace }}
-  {{- else }}
-  namespace: {{ .Release.Namespace | quote }}
-  {{- end }}
-  labels:
-    app: {{ template "cainjector.name" . }}
-    chart: {{ template "cainjector.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: cert-manager-cainjector-leader-election-core
   {{- if .Values.global.leaderElection.namespace }}
   namespace: {{ .Values.global.leaderElection.namespace }}

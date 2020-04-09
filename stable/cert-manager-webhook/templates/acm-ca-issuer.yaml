@@ -1,0 +1,8 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: multicloud-ca-issuer
+  namespace: {{ .Values.pkiNamespace | quote }}
+spec:
+  ca:
+    secretName: multicloud-ca-cert

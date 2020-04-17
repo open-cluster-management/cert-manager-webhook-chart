@@ -7,18 +7,10 @@ metadata:
     chart: {{ include "webhook.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  annotations:
-{{- if .Values.injectAPIServerCA }}
-    certmanager.k8s.io/inject-apiserver-ca: "true"
-{{- end }}
 webhooks:
   - name: webhook.certmanager.k8s.io
     namespaceSelector:
       matchExpressions:
-      - key: "certmanager.k8s.io/disable-validation"
-        operator: "NotIn"
-        values:
-        - "true"
       - key: "name"
         operator: "NotIn"
         values:

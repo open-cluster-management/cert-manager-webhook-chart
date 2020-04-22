@@ -3,6 +3,8 @@ global:
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ##
   pullSecret: ""
+  imageOverrides:
+    cert_manager_webhook: ""
 
   # Optional priority class to be used for the cert-manager pods
   priorityClassName: ""
@@ -33,15 +35,8 @@ resources:
     memory: "150Mi"
     cpu: "100m" 
 
-imageTagPostfix: ""
 image:
-  name: cert-manager-webhook
-  repository: quay.io/open-cluster-management
-  tag: 0.10.1
   pullPolicy: IfNotPresent
-
-imageShaDigests:
-  cert_manager_webhook: ""
 
 tolerations: {}
 # if true, the apiserver's cabundle will be automatically injected into the

@@ -2,6 +2,16 @@ global:
   __metadata:
     label: "Global Chart Settings"
     description: "Global values for cert-manager-webhook chart"
+  imageOverrides:
+    _metadata:
+      name: "imageOverrides"
+      label: "CI/CD Image Overrides"
+      description: "Special Value for CI/CD Build Requirements"
+      cert_manager_webhook:
+        _metadata:
+          name: "cert-manager_webhook"
+          description: "key for cert_manager_webhook image from override"
+          hidden: true
   pullSecret:
     __metadata:
       label: "Image Pull Secret"

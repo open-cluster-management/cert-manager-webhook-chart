@@ -4,6 +4,8 @@ global:
   ##
   imagePullSecrets: []
   # - name: "image-pull-secret"
+  imageOverrides:
+    cert_manager_cainjector: ""
 
   # Optional priority class to be used for the cert-manager pods
   priorityClassName: ""
@@ -39,15 +41,8 @@ resources: {}
   #   cpu: 10m
   #   memory: 32Mi
 
-imageTagPostfix: ""
 image:
-  name: cert-manager-cainjector
-  repository: quay.io/open-cluster-management
-  tag: 0.10.1
   pullPolicy: IfNotPresent
-
-imageShaDigests:
-  cert_manager_cainjector: ""
 
 securityContext:
   pod:

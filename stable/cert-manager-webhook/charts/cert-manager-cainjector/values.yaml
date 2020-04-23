@@ -39,9 +39,6 @@ resources: {}
   #   cpu: 10m
   #   memory: 32Mi
 
-image:
-  pullPolicy: IfNotPresent
-
 securityContext:
   pod:
     runAsNonRoot: true

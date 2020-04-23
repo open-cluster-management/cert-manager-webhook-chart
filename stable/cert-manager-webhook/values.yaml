@@ -5,6 +5,8 @@ global:
   pullSecret: ""
   imageOverrides:
     cert_manager_webhook: ""
+  image:
+    pullPolicy: IfNotPresent
 
   # Optional priority class to be used for the cert-manager pods
   priorityClassName: ""
@@ -35,8 +37,6 @@ resources:
     memory: "150Mi"
     cpu: "100m" 
 
-image:
-  pullPolicy: IfNotPresent
 
 tolerations: {}
 # if true, the apiserver's cabundle will be automatically injected into the

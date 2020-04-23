@@ -46,7 +46,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.imageOverrides.cert_manager_cainjector }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           args:
           {{- if .Values.global.leaderElection.namespace }}
           - --leader-election-namespace={{ .Values.global.leaderElection.namespace }}

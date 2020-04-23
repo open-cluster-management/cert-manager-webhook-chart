@@ -5,7 +5,8 @@ global:
   pullSecret: ""
   imageOverrides:
     cert_manager_webhook: ""
-  pullPolicy: IfNotPresent
+    cert_manager_cainjector: ""
+  pullPolicy: Always
 
   # Optional priority class to be used for the cert-manager pods
   priorityClassName: ""

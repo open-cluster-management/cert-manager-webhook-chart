@@ -4,8 +4,6 @@ global:
   ##
   imagePullSecrets: []
   # - name: "image-pull-secret"
-  imageOverrides:
-    cert_manager_cainjector: ""
 
   # Optional priority class to be used for the cert-manager pods
   priorityClassName: ""

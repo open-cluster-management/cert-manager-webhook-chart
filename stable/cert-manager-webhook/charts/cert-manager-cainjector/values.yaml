@@ -39,16 +39,6 @@ resources: {}
   #   cpu: 10m
   #   memory: 32Mi
 
-imageTagPostfix: ""
-image:
-  name: cert-manager-cainjector
-  repository: quay.io/open-cluster-management
-  tag: 0.10.1
-  pullPolicy: IfNotPresent
-
-imageShaDigests:
-  cert_manager_cainjector: ""
-
 securityContext:
   pod:
     runAsNonRoot: true

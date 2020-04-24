@@ -26,7 +26,7 @@ spec:
     runAsNonRoot: {{ .Values.securityContext.pod.runAsNonRoot }}
   containers:
   - name: {{ .Release.Name }}-test-cm-health
-    image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    image: {{ .Values.global.imageOverrides.cert_manager_webhook }}
     command: ["sh", "-c", "echo cert-manager-webhook-tests"]
     resources:
       limits:

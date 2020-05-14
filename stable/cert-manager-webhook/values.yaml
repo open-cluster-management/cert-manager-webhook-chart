@@ -1,51 +1,27 @@
 global:
-  ## Reference to a secret to be used when pulling images
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
   pullSecret: ""
   imageOverrides:
     cert_manager_webhook: ""
     cert_manager_cainjector: ""
   pullPolicy: Always
-
-  # Optional priority class to be used for the cert-manager pods
   priorityClassName: ""
   rbac:
     create: true
-
 replicaCount: 1
-
 strategy: {}
-  # type: RollingUpdate
-  # rollingUpdate:
-  #   maxSurge: 0
-  #   maxUnavailable: 1
-
 podAnnotations: {}
-
 args:
   verbosity: 1
-
-# Optional additional arguments for webhook
 extraArgs: []
-
 resources:
   limits:
-    memory: "300Mi"
-    cpu: "200m"
+    memory: 300Mi
+    cpu: 200m
   requests:
-    memory: "150Mi"
-    cpu: "100m" 
-
-
+    memory: 150Mi
+    cpu: 100m
 tolerations: {}
-# if true, the apiserver's cabundle will be automatically injected into the
-# webhook's ValidatingWebhookConfiguration resource by the CA injector.
-# in future this will default to false, as the apiserver can use the loopback
-# configuration caBundle to talk to itself in kubernetes 1.11+
-# see https://github.com/kubernetes/kubernetes/pull/62649
 injectAPIServerCA: true
-
 securityContext:
   pod:
     runAsNonRoot: true
@@ -54,20 +30,15 @@ securityContext:
     readOnlyRootFilesystem: false
     runAsNonRoot: true
     privileged: false
-
 serviceAccount:
-  # Specifies whether a service account should be created
   create: false
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: "default"
-
+  name: default
 affinity: {}
-
 watcher:
   optIn: true
   configmap:
     name: extension-apiserver-authentication
     namespace: kube-system
-
-pkiNamespace: "kube-system"
+pkiNamespace: kube-system
+image:
+  tag: 3.5.0

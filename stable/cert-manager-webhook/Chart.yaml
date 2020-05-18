@@ -1,7 +1,7 @@
 name: cert-manager-webhook
 apiVersion: v1
-version: 3.5.0
-appVersion: 0.10.1
+version: 3.6.0
+appVersion: 0.10.2
 tillerVersion: ">=2.7.0"
 kubeVersion: ">=1.9.0-0"
 description: A Helm chart for deploying the cert-manager webhook component

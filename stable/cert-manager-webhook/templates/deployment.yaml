@@ -110,3 +110,7 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.global.pullSecret }}
       {{- end }}
+      {{- with .Values.hubconfig.nodeSelector }}
+      nodeSelector:
+      {{ toYaml . | indent 8 }}
+      {{- end }}

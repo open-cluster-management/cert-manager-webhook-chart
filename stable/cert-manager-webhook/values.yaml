@@ -62,7 +62,27 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: "default"
 
-affinity: {}
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 70
+      podAffinityTerm:
+        topologyKey: failure-domain.beta.kubernetes.io/zone
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - cert-manager-webhook
+    - weight: 35
+      podAffinityTerm:
+        topologyKey: kubernetes.io/hostname
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - cert-manager-webhook
 
 watcher:
   optIn: true
@@ -71,3 +91,6 @@ watcher:
     namespace: kube-system
 
 pkiNamespace: "kube-system"
+
+hubconfig:
+  nodeSelector: null

@@ -8,11 +8,6 @@ global:
     cert_manager_cainjector: ""
   pullPolicy: Always
 
-  hubconfig:
-    nodeSelector: null
-    replicaCount: 1
-
-
   # Optional priority class to be used for the cert-manager pods
   priorityClassName: ""
   rbac:
@@ -94,3 +89,7 @@ watcher:
     namespace: kube-system
 
 pkiNamespace: "kube-system"
+
+hubconfig:
+  nodeSelector: null
+  replicaCount: 1

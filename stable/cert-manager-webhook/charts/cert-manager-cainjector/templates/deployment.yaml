@@ -9,7 +9,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.global.hubconfig.replicaCount }}
+  replicas: {{ .Values.hubconfig.replicaCount }}
   selector:
     matchLabels:
       app: {{ include "cainjector.name" . }}

@@ -14,7 +14,9 @@ global:
     # Override the namespace used to store the ConfigMap for leader election
     namespace: ""
 
-replicaCount: 1
+hubconfig:
+  replicaCount: 1
+  nodeSelector: ""
 
 tolerations:
 - effect: NoSchedule

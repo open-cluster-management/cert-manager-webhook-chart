@@ -12,7 +12,7 @@ metadata:
   annotations:
     watcher.ibm.com/configmap-resource: "{{ .Values.watcher.configmap.namespace }}/{{ .Values.watcher.configmap.name }}"
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.global.hubconfig.replicaCount }}
   selector:
     matchLabels:
       app: {{ include "webhook.name" . }}

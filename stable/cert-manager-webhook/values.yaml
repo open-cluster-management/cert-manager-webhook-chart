@@ -13,8 +13,6 @@ global:
   rbac:
     create: true
 
-replicaCount: 1
-
 strategy: {}
   # type: RollingUpdate
   # rollingUpdate:
@@ -94,3 +92,4 @@ pkiNamespace: "kube-system"
 
 hubconfig:
   nodeSelector: null
+  replicaCount: 1

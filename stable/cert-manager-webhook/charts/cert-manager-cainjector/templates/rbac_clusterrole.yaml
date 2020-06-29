@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Values.org }}:{{ .Chart.Name }}-cainjector:clusterrole
+  name: {{ .Values.org }}:{{ .Chart.Name }}:clusterrole
   labels:
     app: {{ include "cainjector.name" . }}
     chart: {{ include "cainjector.chart" . }}

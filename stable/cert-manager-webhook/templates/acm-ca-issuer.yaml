@@ -5,4 +5,8 @@ metadata:
   namespace: {{ .Values.pkiNamespace | quote }}
 spec:
   ca:
+    {{ if (lookup "v1" "Secret" .Values.pkiNamespace "byo-ca-cert") }}
+    secretName: byo-ca-cert
+    {{ else }}
     secretName: multicloud-ca-cert
+    {{ end }}

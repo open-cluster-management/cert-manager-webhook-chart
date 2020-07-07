@@ -5,7 +5,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Values.org }}:{{ .Chart.Name }}:auth-delegator
+  name: {{ .Values.org }}:{{ .Release.Name }}:auth-delegator
   labels:
     app: {{ include "webhook.name" . }}
     chart: {{ include "webhook.chart" . }}

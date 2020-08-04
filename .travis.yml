@@ -21,6 +21,7 @@ stages:
   - build
   - unit-test
   - test-e2e
+  - auto
 
 jobs:
   include:
@@ -50,4 +51,11 @@ jobs:
         - |
           make init
           make component/test/e2e
+    - stage: auto
+      name: "Auto trigger mch-repo"
+      if: type = pull_request
+      script: 
+        - git clone --single-branch --branch dev-auto https://${GITHUB_TOKEN}@github.com/open-cluster-management/multicloudhub-repo.git
+        - cd multicloudhub-repo
+        - ./cicd-scripts/chartAutomation.sh cert-manager-webhook
 

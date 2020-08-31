@@ -32,7 +32,7 @@ extraArgs: []
 
 resources:
   limits:
-    memory: "300Mi"
+    memory: "768Mi"
     cpu: "200m"
   requests:
     memory: "150Mi"

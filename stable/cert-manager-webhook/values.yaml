@@ -1,3 +1,6 @@
+
+org: open-cluster-management
+
 global:
   ## Reference to a secret to be used when pulling images
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -12,8 +15,6 @@ global:
   priorityClassName: ""
   rbac:
     create: true
-
-replicaCount: 1
 
 strategy: {}
   # type: RollingUpdate
@@ -31,7 +32,7 @@ extraArgs: []
 
 resources:
   limits:
-    memory: "300Mi"
+    memory: "768Mi"
     cpu: "200m"
   requests:
     memory: "150Mi"
@@ -94,3 +95,4 @@ pkiNamespace: "kube-system"
 
 hubconfig:
   nodeSelector: null
+  replicaCount: 1

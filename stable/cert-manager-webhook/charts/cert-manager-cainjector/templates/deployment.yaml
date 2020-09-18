@@ -9,7 +9,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.hubconfig.replicaCount }}
   selector:
     matchLabels:
       app: {{ include "cainjector.name" . }}
@@ -87,7 +87,7 @@ spec:
             runAsNonRoot: {{ .Values.securityContext.container.runAsNonRoot }}
           resources:
             limits:
-              memory: "300Mi"
+              memory: "768Mi"
               cpu: "200m"
             requests:
               memory: "150Mi"

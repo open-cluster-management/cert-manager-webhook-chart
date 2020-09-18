@@ -1,3 +1,5 @@
+org: open-cluster-management
+
 global:
   ## Reference to one or more secrets to be used when pulling images
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -14,7 +16,9 @@ global:
     # Override the namespace used to store the ConfigMap for leader election
     namespace: ""
 
-replicaCount: 1
+hubconfig:
+  replicaCount: 1
+  nodeSelector: ""
 
 tolerations:
 - effect: NoSchedule

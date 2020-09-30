@@ -1,7 +1,7 @@
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: {{ include "webhook.fullname" . }}-alpha1
+  name: {{ include "webhook.fullname" . }}-v1alpha1
   labels:
     app: {{ include "webhook.name" . }}
     chart: {{ include "webhook.chart" . }}

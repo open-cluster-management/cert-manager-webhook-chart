@@ -28,6 +28,7 @@ spec:
         chart: {{ template "webhook.chart" . }}
         heritage: {{ .Release.Service }}
         app: {{ include "webhook.name" . }}
+        ocm-antiaffinity-selector: "certmanagerwebhook"
         release: {{ .Release.Name }}
       annotations:
       {{- if .Values.podAnnotations }}

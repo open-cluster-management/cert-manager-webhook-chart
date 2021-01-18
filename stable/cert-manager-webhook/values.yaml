@@ -71,19 +71,19 @@ affinity:
         topologyKey: topology.kubernetes.io/zone
         labelSelector:
           matchExpressions:
-          - key: app
+          - key: ocm-antiaffinity-selector
             operator: In
             values:
-            - cert-manager-webhook
+            - certmanagerwebhook
     - weight: 35
       podAffinityTerm:
         topologyKey: kubernetes.io/hostname
         labelSelector:
           matchExpressions:
-          - key: app
+          - key: ocm-antiaffinity-selector
             operator: In
             values:
-            - cert-manager-webhook
+            - certmanagerwebhook
 
 watcher:
   optIn: true

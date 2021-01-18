@@ -25,6 +25,7 @@ spec:
         chart: {{ template "cainjector.chart" . }}
         heritage: {{ .Release.Service }}
         app: {{ include "cainjector.name" . }}
+        ocm-antiaffinity-selector: "certmanagercainjector"
         release: {{ .Release.Name }}
       annotations:
       {{- if .Values.podAnnotations }}
@@ -100,19 +101,19 @@ spec:
               topologyKey: topology.kubernetes.io/zone
               labelSelector:
                 matchExpressions:
-                - key: app
+                - key: ocm-antiaffinity-selector
                   operator: In
                   values:
-                  - cert-manager-cainjector
+                  - certmanagercainjector
           - weight: 35
             podAffinityTerm:
               topologyKey: kubernetes.io/hostname
               labelSelector:
                 matchExpressions:
-                - key: app
+                - key: ocm-antiaffinity-selector
                   operator: In
                   values:
-                  - cert-manager-cainjector 
+                  - certmanagercainjector
     {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}

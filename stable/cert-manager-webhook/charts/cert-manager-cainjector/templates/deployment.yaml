@@ -88,10 +88,10 @@ spec:
             runAsNonRoot: {{ .Values.securityContext.container.runAsNonRoot }}
           resources:
             limits:
-              memory: "768Mi"
+              memory: "200Mi"
               cpu: "200m"
             requests:
-              memory: "150Mi"
+              memory: "100Mi"
               cpu: "100m"            
       affinity:
         podAntiAffinity:

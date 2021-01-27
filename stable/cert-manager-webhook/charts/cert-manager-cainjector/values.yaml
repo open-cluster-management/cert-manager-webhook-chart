@@ -36,7 +36,8 @@ strategy: {}
 podAnnotations: {}
 
 # Optional additional arguments for cainjector
-extraArgs: []
+extraArgs:
+  - --namespace=$(POD_NAMESPACE)
 
 resources: {}
   # requests:

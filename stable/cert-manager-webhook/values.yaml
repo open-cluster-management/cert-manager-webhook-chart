@@ -39,7 +39,11 @@ resources:
     cpu: "100m" 
 
 
-tolerations: {}
+tolerations: 
+- effect: NoSchedule 
+  key: node-role.kubernetes.io/infra 
+  operator: Exists
+
 # if true, the apiserver's cabundle will be automatically injected into the
 # webhook's ValidatingWebhookConfiguration resource by the CA injector.
 # in future this will default to false, as the apiserver can use the loopback

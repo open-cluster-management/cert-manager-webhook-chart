@@ -1,3 +1,5 @@
+# Copyright Contributors to the Open Cluster Management project
+
 ###############################################################################
 # Licensed Materials - Property of IBM.
 # Copyright IBM Corporation 2017. All Rights Reserved.

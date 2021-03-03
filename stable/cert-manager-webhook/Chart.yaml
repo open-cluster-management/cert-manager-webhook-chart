@@ -1,12 +1,12 @@
 name: cert-manager-webhook
 apiVersion: v1
-version: 3.7.0
-appVersion: 0.10.3
+version: 3.8.0
+appVersion: 0.10.4
 tillerVersion: ">=2.7.0"
 description: A Helm chart for deploying the cert-manager webhook component
-home: https://github.com/jetstack/cert-manager
+home: https://github.com/open-cluster-management/cert-manager
 sources:
-  - https://github.com/jetstack/cert-manager
+  - https://github.com/open-cluster-management/cert-manager
 keywords:
   - cert-manager
   - kube-lego
@@ -14,7 +14,5 @@ keywords:
   - tls
   - Development
   - amd64
-  - ppc64le
-  - s390x
   - Commercial
   - RHOCP

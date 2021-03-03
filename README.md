@@ -1,3 +1,5 @@
+[comment]: # ( Copyright Contributors to the Open Cluster Management project )
+
 # cert-manager Webhook Chart
 The helm chart for the [cert-manager webhook](https://github.com/open-cluster-management/cert-manager).
 
